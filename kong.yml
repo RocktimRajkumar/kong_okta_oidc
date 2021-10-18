@@ -1,0 +1,16 @@
+_format_version: "2.1"
+
+services:
+  - name: hello-service
+    url: http://localhost:5000
+    routes:
+      - name: hello-route
+        paths:
+          - /
+
+plugins:
+  - name: rate-limiting
+    service: hello-service
+    config:
+      minute: 5
+      policy: local

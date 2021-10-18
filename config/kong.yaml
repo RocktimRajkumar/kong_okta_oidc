@@ -1,0 +1,34 @@
+_format_version: "2.1"
+
+services:
+
+  - name: hello-service-test
+    url: http://host.docker.internal:5000/login
+    routes:
+      - name: hello-route-test
+        paths: 
+          - /login
+        strip_path: true
+  
+  - name: hello-service
+    url: http://host.docker.internal:5000
+    routes:
+      - name: hello-route
+        paths: 
+          - /
+        strip_path: true
+
+
+plugins:
+  - name: rate-limiting
+    service: hello-service
+    config:
+      minute: 5
+      policy: local
+
+  - name: oidc
+    config:
+      client_id: 0oa28q9edy8pBDB4U5d7
+      client_secret: lYMbBzXLFrdD4rfDFHeWpGUvuZPmxMMROlrvA0ti
+      ssl_very: false
+      issuer: https://dev-59176230.okta.com/oauth2/default/userinfo
